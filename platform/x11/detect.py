@@ -132,6 +132,10 @@ def configure(env):
     env.ParseConfig('pkg-config xinerama --cflags --libs')
     env.ParseConfig('pkg-config xcursor --cflags --libs')
     env.ParseConfig('pkg-config xrandr --cflags --libs')
+    env.ParseConfig('pkg-config xrender --cflags --libs')
+    env.ParseConfig('pkg-config gl --cflags --libs')
+    env.ParseConfig('pkg-config glu --cflags --libs')
+    env.ParseConfig('pkg-config zlib --cflags --libs')
 
     if (env['builtin_openssl'] == 'no'):
         env.ParseConfig('pkg-config openssl --cflags --libs')
