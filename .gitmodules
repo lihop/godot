@@ -1,0 +1,3 @@
+[submodule "modules/stream_peer_unix"]
+	path = modules/stream_peer_unix
+	url = https://github.com/lihop/stream_peer_unix.git
