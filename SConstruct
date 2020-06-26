@@ -66,6 +66,10 @@ if "TERM" in os.environ:
     env_base["ENV"]["TERM"] = os.environ["TERM"]
 env_base.AppendENVPath("PATH", os.getenv("PATH"))
 env_base.AppendENVPath("PKG_CONFIG_PATH", os.getenv("PKG_CONFIG_PATH"))
+for k in ("TERM", "PATH", "PKG_CONFIG_PATH"):
+    if (k in os.environ):
+        env_base["ENV"][k] = os.environ[k]
+
 env_base.disabled_modules = []
 env_base.use_ptrcall = False
 env_base.module_version_string = ""

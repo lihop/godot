@@ -201,8 +201,13 @@ def configure(env):
     env.ParseConfig("pkg-config xrender --cflags --libs")
     env.ParseConfig("pkg-config xi --cflags --libs")
 
-    if env["touch"]:
-        env.Append(CPPDEFINES=["TOUCH_ENABLED"])
+    env.ParseConfig('pkg-config xext --cflags --libs')
+    env.ParseConfig('pkg-config xfixes --cflags --libs')
+    env.ParseConfig('pkg-config glu --cflags --libs')
+    env.ParseConfig('pkg-config zlib --cflags --libs')
+
+    if (env['touch']):
+        env.Append(CPPDEFINES=['TOUCH_ENABLED'])
 
     # FIXME: Check for existence of the libs before parsing their flags with pkg-config
 
@@ -298,8 +303,9 @@ def configure(env):
     if os.system("pkg-config --exists alsa") == 0:  # 0 means found
         print("Enabling ALSA")
         env.Append(CPPDEFINES=["ALSA_ENABLED", "ALSAMIDI_ENABLED"])
-        # Don't parse --cflags, we don't need to add /usr/include/alsa to include path
-        env.ParseConfig("pkg-config alsa --libs")
+
+	# Don't parse --cflags, we don't need to add /usr/include/alsa to include path
+        env.ParseConfig('pkg-config alsa --cflags --libs')
     else:
         print("ALSA libraries not found, disabling driver")
 
