@@ -1,3 +1,6 @@
 [submodule "modules/stream_peer_unix"]
 	path = modules/stream_peer_unix
 	url = https://github.com/lihop/stream_peer_unix.git
+[submodule "modules/ECMAScript"]
+	path = modules/ECMAScript
+	url = https://github.com/GodotExplorer/ECMAScript.git
