@@ -57,9 +57,16 @@ CurveEditor::CurveEditor() {
 	_presets_menu->add_item(TTR("Flat 0"), PRESET_FLAT0);
 	_presets_menu->add_item(TTR("Flat 1"), PRESET_FLAT1);
 	_presets_menu->add_item(TTR("Linear"), PRESET_LINEAR);
+	_presets_menu->add_item(TTR("Inverse Linear"), PRESET_INVERSE_LINEAR);
 	_presets_menu->add_item(TTR("Ease In"), PRESET_EASE_IN);
 	_presets_menu->add_item(TTR("Ease Out"), PRESET_EASE_OUT);
 	_presets_menu->add_item(TTR("Smoothstep"), PRESET_SMOOTHSTEP);
+	_presets_menu->add_item(TTR("Logistic"), PRESET_LOGISTIC);
+	_presets_menu->add_item(TTR("Inverse Logistic"), PRESET_INVERSE_LOGISTIC);
+	_presets_menu->add_item(TTR("Poly Upper Left"), PRESET_POLY_UPPER_LEFT);
+	_presets_menu->add_item(TTR("Poly Lower Left"), PRESET_POLY_LOWER_LEFT);
+	_presets_menu->add_item(TTR("Poly Upper Right"), PRESET_POLY_UPPER_RIGHT);
+	_presets_menu->add_item(TTR("Poly Lower Right"), PRESET_POLY_LOWER_RIGHT);
 	_presets_menu->connect("id_pressed", this, "_on_preset_item_selected");
 	_context_menu->add_child(_presets_menu);
 }
@@ -275,6 +282,13 @@ void CurveEditor::on_preset_item_selected(int preset_id) {
 			curve.set_point_left_mode(1, Curve::TANGENT_LINEAR);
 			break;
 
+		case PRESET_INVERSE_LINEAR:
+			curve.add_point(Vector2(0, 1));
+			curve.add_point(Vector2(1, 0));
+			curve.set_point_right_mode(0, Curve::TANGENT_LINEAR);
+			curve.set_point_left_mode(1, Curve::TANGENT_LINEAR);
+			break;
+
 		case PRESET_EASE_IN:
 			curve.add_point(Vector2(0, 0));
 			curve.add_point(Vector2(1, 1), (curve.get_max_value() - curve.get_min_value()) * 1.4, 0);
@@ -288,6 +302,38 @@ void CurveEditor::on_preset_item_selected(int preset_id) {
 		case PRESET_SMOOTHSTEP:
 			curve.add_point(Vector2(0, 0));
 			curve.add_point(Vector2(1, 1));
+			break;
+
+		case PRESET_LOGISTIC:
+			curve.add_point(Vector2(0, 0));
+			curve.add_point(Vector2(0.5, 0.5), 2.71828, 2.71828);
+			curve.add_point(Vector2(1, 1));
+			break;
+
+		case PRESET_INVERSE_LOGISTIC:
+			curve.add_point(Vector2(0, 1));
+			curve.add_point(Vector2(0.5, 0.5), -2.71828, -2.71828);
+			curve.add_point(Vector2(1, 0));
+			break;
+
+		case PRESET_POLY_UPPER_LEFT:
+			curve.add_point(Vector2(0, 0), 0.0, 3.0);
+			curve.add_point(Vector2(1, 1));
+			break;
+
+		case PRESET_POLY_LOWER_LEFT:
+			curve.add_point(Vector2(0, 1), 0.0, -3.0);
+			curve.add_point(Vector2(1, 0));
+			break;
+
+		case PRESET_POLY_UPPER_RIGHT:
+			curve.add_point(Vector2(0, 1));
+			curve.add_point(Vector2(1, 0), -3.0);
+			break;
+
+		case PRESET_POLY_LOWER_RIGHT:
+			curve.add_point(Vector2(0, 0));
+			curve.add_point(Vector2(1, 1), 3.0);
 			break;
 
 		default:
