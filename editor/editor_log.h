@@ -33,6 +33,7 @@
 
 #include "scene/gui/control.h"
 #include "scene/gui/label.h"
+#include "scene/gui/line_edit.h"
 #include "scene/gui/rich_text_label.h"
 #include "scene/gui/texture_button.h"
 //#include "scene/gui/empty_control.h"
@@ -54,6 +55,7 @@ class EditorLog : public VBoxContainer {
 	HBoxContainer *title_hb;
 	//PaneDrag *pd;
 	ToolButton *tool_button;
+	LineEdit *search_box;
 
 	static void _error_handler(void *p_self, const char *p_func, const char *p_file, int p_line, const char *p_error, const char *p_errorexp, ErrorHandlerType p_type);
 

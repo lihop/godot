@@ -126,8 +126,14 @@ void EditorLog::add_message(const String &p_msg, MessageType p_type) {
 		} break;
 	}
 
-	log->add_text(p_msg);
-	log->add_newline();
+	// Only add the message to the log if it passes the filters.
+	String search_text = search_box->get_text();
+	bool search_match = search_text == String() || p_msg.findn(search_text) > -1;
+
+	if (search_match) {
+		log->add_text(p_msg);
+		log->add_newline();
+	}
 
 	if (restore)
 		log->pop();
@@ -161,6 +167,12 @@ EditorLog::EditorLog() {
 	title->set_text(TTR("Output:"));
 	title->set_h_size_flags(SIZE_EXPAND_FILL);
 	hb->add_child(title);
+
+	search_box = memnew(LineEdit);
+	search_box->set_h_size_flags(Control::SIZE_EXPAND_FILL);
+	search_box->set_placeholder(TTR("Filter messages"));
+	search_box->set_visible(true);
+	hb->add_child(search_box);
 
 	copybutton = memnew(Button);
 	hb->add_child(copybutton);
