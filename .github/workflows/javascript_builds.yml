@@ -75,7 +75,8 @@ jobs:
         env:
           SCONS_CACHE: ${{github.workspace}}/.scons_cache/
         run: |
-          scons target=release tools=no use_closure_compiler=yes
+          scons target=release_debug tools=no gdnative_enabled=yes use_closure_compiler=yes
+          mv bin/godot.javascript.opt.debug.gdnative.zip bin/webassembly_gdnative_debug.zip
           ls -l bin/
 
       - uses: actions/upload-artifact@v2
